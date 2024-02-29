@@ -59,8 +59,27 @@ for aba in workbook_ar_condicionado.sheetnames:
         data.append(row)
     
 # Cria um DataFrame a partir dos dados da aba
-df_condicionado = pd.DataFrame(data)
-    
+df_condicionado = pd.DataFrame(data[:][:8])
+
+# Remover as linhas onde a primeira coluna tem o valor 'DIA'
+df_queixas = df_queixas[df_queixas.iloc[:, 0] != 'Nº CHAMADO']
+
+# Renomear as colunas
+df_condicionado = df_condicionado.rename(columns={
+    0: 'Nº CHAMADO',
+    1: 'DATA_REGISTRO',
+    2: 'SALA',
+    3: 'LOCALIZAÇÃO',
+    4: 'PROBLEMA',
+    5: 'SERVICO',
+    6: 'DATA_ABERTURA',
+    7: 'DATA_RESOLUCAO',
+    8: 'SITUACAO',
+})
+
+# Remover linhas vazias
+df_condicionado = df_queixas.dropna()
+
 # Fecha o arquivo após terminar
 workbook_queixas.close()
 
