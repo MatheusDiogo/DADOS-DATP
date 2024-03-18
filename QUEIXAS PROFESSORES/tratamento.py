@@ -55,14 +55,14 @@ for filename in os.listdir(folder):
             11: 'COMO? (como será feito?)'
         })
         
-        # Remover linhas vazias
-        df = df.dropna()
-        
         # Adicionar o DataFrame tratado à lista
         dfs.append(df)
 
 # Concatenar todos os DataFrames em um único DataFrame
 df_combined = pd.concat(dfs, ignore_index=True)
+        
+# Remover linhas vazias
+df_combined = df_combined.dropna(subset='PROBLEMA RELATADO')
 
 # Salvar o DataFrame combinado em um arquivo Excel
 df_combined.to_excel('Queixas Professores Tratados.xlsx', index=False)
